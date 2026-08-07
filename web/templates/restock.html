@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>今日補貨</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container py-4" style="max-width:420px;">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h3 class="text-center">
+
+📦 今日補貨
+
+</h3>
+
+<hr>
+
+{% if rows %}
+
+{% for row in rows %}
+
+<div class="card mb-3">
+
+<div class="card-body">
+
+<h5>{{ row[0] }}</h5>
+
+需要補貨：
+
+<strong>{{ row[1] }} 瓶</strong>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p class="text-center">
+
+🎉 今天不用補貨
+
+</p>
+
+{% endif %}
+
+<a
+href="/"
+class="btn btn-primary w-100">
+
+回首頁
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
