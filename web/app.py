@@ -1,16 +1,9 @@
-import os
-import sqlite3
+from routes.home import register as home_register
+from db import get_connection
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATABASE = os.path.join(BASE_DIR, "database", "qinxiang_store.db")
-
-@app.route("/")
-def home():
-
-    return render_template("index.html")
+home_register(app)
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -23,7 +16,7 @@ def search():
 
         keyword = request.form["keyword"].strip()
 
-        conn = sqlite3.connect(DATABASE)
+        conn = get_connection()
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -53,7 +46,7 @@ def search():
 @app.route("/scan/<int:order>", methods=["GET", "POST"])
 def scan(order):
 
-    conn = sqlite3.connect(DATABASE)
+    conn = get_connection()
     cursor = conn.cursor()
 
     if request.method == "POST":
@@ -106,7 +99,7 @@ def scan(order):
 @app.route("/restock")
 def restock():
 
-    conn = sqlite3.connect(DATABASE)
+    conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -130,7 +123,7 @@ def restock():
 @app.route("/products")
 def products():
 
-    conn = sqlite3.connect(DATABASE)
+    conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -155,7 +148,7 @@ def products():
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
 
-    conn = sqlite3.connect(DATABASE)
+    conn = get_connection()
     cursor = conn.cursor()
 
     if request.method == "POST":
@@ -209,6 +202,60 @@ def edit(id):
         "edit.html",
         row=row
     )
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        cursor.execute("""
+        INSERT INTO products(
+            name,
+            barcode,
+            price,
+            fridge_max,
+            fridge_now,
+            display_order,
+            restock_threshold
+        )
+        VALUES(?,?,?,?,?,?,?)
+        """, (
+            request.form["name"],
+            request.form["barcode"],
+            request.form["price"],
+            request.form["fridge_max"],
+            request.form["fridge_now"],
+            request.form["display_order"],
+            request.form["restock_threshold"]
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/products")
+
+    conn.close()
+
+    return render_template("add_product.html")
+
+@app.route("/delete/<int:id>")
+def delete(id):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM products WHERE id=?",
+        (id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/products")
 
 if __name__ == "__main__":
     app.run(debug=True)

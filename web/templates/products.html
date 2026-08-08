@@ -22,6 +22,16 @@
 
 </h2>
 
+<div class="mb-3 text-end">
+
+    <a href="/add" class="btn btn-success">
+
+        ➕ 新增商品
+
+    </a>
+
+</div>
+
 <table class="table table-striped">
 
 <thead>
@@ -53,15 +63,22 @@
 
 <a
 class="btn btn-sm btn-primary"
-href="/edit/{{ row[3] }}">
+href="/edit/{{ row[0] }}">
 
 ✏️ 修改
 
 </a>
 
-</td>
+<a
+class="btn btn-sm btn-danger"
+href="/delete/{{ row[0] }}"
+onclick="return confirm('確定要刪除嗎？')">
 
-</tr>
+🗑️ 刪除
+
+</a>
+
+</td>
 
 {% endfor %}
 
