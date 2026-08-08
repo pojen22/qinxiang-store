@@ -127,6 +127,29 @@ def restock():
         rows=rows
     )
 
+@app.route("/products")
+def products():
+
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT
+        name,
+        price,
+        fridge_now
+    FROM products
+    ORDER BY display_order
+    """)
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "products.html",
+        rows=rows
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

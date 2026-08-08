@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>商品管理</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container py-4" style="max-width:700px;">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h2 class="text-center mb-4">
+
+⚙ 商品管理
+
+</h2>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+
+<th>商品</th>
+<th>售價</th>
+<th>庫存</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in rows %}
+
+<tr>
+
+<td>{{ row[0] }}</td>
+
+<td>{{ row[1] }} 元</td>
+
+<td>{{ row[2] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+<a href="/" class="btn btn-primary w-100">
+
+回首頁
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
