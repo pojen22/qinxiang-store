@@ -31,6 +31,7 @@
 <th>商品</th>
 <th>售價</th>
 <th>庫存</th>
+<th>操作</th>
 
 </tr>
 
@@ -47,6 +48,18 @@
 <td>{{ row[1] }} 元</td>
 
 <td>{{ row[2] }}</td>
+
+<td>
+
+<a
+class="btn btn-sm btn-primary"
+href="/edit/{{ row[3] }}">
+
+✏️ 修改
+
+</a>
+
+</td>
 
 </tr>
 

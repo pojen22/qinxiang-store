@@ -135,6 +135,7 @@ def products():
 
     cursor.execute("""
     SELECT
+        id,
         name,
         price,
         fridge_now
@@ -149,6 +150,64 @@ def products():
     return render_template(
         "products.html",
         rows=rows
+    )
+
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def edit(id):
+
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        name = request.form["name"]
+        price = request.form["price"]
+        fridge_max = request.form["fridge_max"]
+        fridge_now = request.form["fridge_now"]
+        restock_threshold = request.form["restock_threshold"]
+
+        cursor.execute("""
+        UPDATE products
+        SET
+            name=?,
+            price=?,
+            fridge_max=?,
+            fridge_now=?,
+            restock_threshold=?
+        WHERE id=?
+        """, (
+            name,
+            price,
+            fridge_max,
+            fridge_now,
+            restock_threshold,
+            id
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/products")
+
+    cursor.execute("""
+    SELECT
+        id,
+        name,
+        price,
+        fridge_max,
+        fridge_now,
+        restock_threshold
+    FROM products
+    WHERE id=?
+    """, (id,))
+
+    row = cursor.fetchone()
+
+    conn.close()
+
+    return render_template(
+        "edit.html",
+        row=row
     )
 
 if __name__ == "__main__":
