@@ -129,13 +129,13 @@ def products():
     cursor.execute("""
     SELECT
         id,
+        display_order,
         name,
         price,
         fridge_now
     FROM products
     ORDER BY display_order
     """)
-
     rows = cursor.fetchall()
 
     conn.close()
@@ -166,6 +166,7 @@ def edit(id):
             price=?,
             fridge_max=?,
             fridge_now=?,
+            display_order=?,
             restock_threshold=?
         WHERE id=?
         """, (
@@ -173,6 +174,7 @@ def edit(id):
             price,
             fridge_max,
             fridge_now,
+            request.form["display_order"],
             restock_threshold,
             id
         ))
@@ -189,6 +191,7 @@ def edit(id):
         price,
         fridge_max,
         fridge_now,
+        display_order,
         restock_threshold
     FROM products
     WHERE id=?
