@@ -2,90 +2,128 @@
 <html lang="zh-TW">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>修改商品</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-light">
 
 <div class="container py-4" style="max-width:500px;">
 
-<div class="card shadow">
+    <div class="card shadow">
 
-<div class="card-body">
+        <div class="card-body">
 
-<h2 class="text-center mb-4">
+            <h2 class="text-center mb-4">
+                ✏️ 修改商品
+            </h2>
 
-✏️ 修改商品
+            <form method="post">
 
-</h2>
+                <label class="form-label">
+                    商品名稱
+                </label>
 
-<form method="post">
+                <input
+                    class="form-control mb-3"
+                    name="name"
+                    value="{{ row[1] }}"
+                    required>
 
-<label class="form-label">商品名稱</label>
+                <label class="form-label">
+                    售價
+                </label>
 
-<input
-class="form-control mb-3"
-name="name"
-value="{{ row[1] }}">
+                <input
+                    class="form-control mb-3"
+                    type="number"
+                    name="price"
+                    value="{{ row[2] }}"
+                    min="0"
+                    required>
 
-<label class="form-label">售價</label>
+                <label class="form-label">
+                    冰箱容量
+                </label>
 
-<input
-class="form-control mb-3"
-type="number"
-name="price"
-value="{{ row[2] }}">
+                <input
+                    class="form-control mb-3"
+                    type="number"
+                    name="fridge_max"
+                    value="{{ row[3] }}"
+                    min="0"
+                    required>
 
-<label class="form-label">冰箱容量</label>
+                <label class="form-label">
+                    目前庫存
+                </label>
 
-<input
-class="form-control mb-3"
-type="number"
-name="fridge_max"
-value="{{ row[3] }}">
+                <input
+                    class="form-control mb-3"
+                    type="number"
+                    name="fridge_now"
+                    value="{{ row[4] }}"
+                    min="0"
+                    required>
 
-<label class="form-label">目前庫存</label>
+                <label class="form-label">
+                    巡冰箱順序
+                </label>
 
-<input
-class="form-control mb-3"
-type="number"
-name="fridge_now"
-value="{{ row[4] }}">
+                <input
+                    class="form-control mb-3"
+                    type="number"
+                    name="display_order"
+                    value="{{ row[5] }}"
+                    min="0"
+                    required>
 
-<label class="form-label">補貨門檻</label>
+                <div class="alert alert-info">
+                    <strong>📌 商品分類</strong><br>
+                    <strong>0</strong> = 一般商品<br>
+                    <strong>1、2、3...</strong> = 冰箱商品
+                </div>
 
-<input
-class="form-control mb-3"
-type="number"
-name="restock_threshold"
-value="{{ row[5] }}">
+                <label class="form-label">
+                    補貨門檻
+                </label>
 
-<button
-class="btn btn-success w-100">
+                <input
+                    class="form-control mb-3"
+                    type="number"
+                    name="restock_threshold"
+                    value="{{ row[6] }}"
+                    min="0"
+                    required>
 
-💾 儲存
+                <button
+                    class="btn btn-success btn-lg w-100">
 
-</button>
+                    💾 儲存
 
-</form>
+                </button>
 
-<br>
+            </form>
 
-<a
-href="/products"
-class="btn btn-secondary w-100">
+            <br>
 
-返回商品管理
+            <a
+                href="/products"
+                class="btn btn-secondary w-100">
 
-</a>
+                返回商品管理
 
-</div>
+            </a>
 
-</div>
+        </div>
+
+    </div>
 
 </div>
 

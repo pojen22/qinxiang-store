@@ -4,7 +4,6 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>商品查價</title>
@@ -15,7 +14,7 @@
 
 <body class="bg-light">
 
-<div class="container py-4" style="max-width:420px;">
+<div class="container py-4" style="max-width:500px;">
 
     <div class="card shadow">
 
@@ -37,7 +36,7 @@
 
                 <button
                     class="btn btn-success w-100">
-                    查詢
+                    🔍 查詢
                 </button>
 
             </form>
@@ -53,34 +52,36 @@
                 <div class="card-body">
 
                     <h5 class="card-title">
-
                         {{ row[0] }}
-
                     </h5>
 
-                    <p>
-
-                        💰 售價：{{ row[1] }} 元
-
+                    <p class="fs-5 mb-2">
+                        💰 售價：<strong>{{ row[1] }} 元</strong>
                     </p>
 
-                    <p>
+                    {% if row[5] > 0 %}
 
+                    <hr>
+
+                    <p class="mb-2">
                         🧊 冰箱容量：{{ row[2] }} 瓶
-
                     </p>
 
-                    <p>
-
+                    <p class="mb-2">
                         📦 目前庫存：{{ row[3] }} 瓶
-
                     </p>
 
-                    <p>
-
-                        ⚠ 補貨門檻：{{ row[4] }} 瓶
-
+                    <p class="mb-0">
+                        ⚠️ 補貨門檻：{{ row[4] }} 瓶
                     </p>
+
+                    {% else %}
+
+                    <p class="text-secondary mb-0">
+                        📦 一般商品
+                    </p>
+
+                    {% endif %}
 
                 </div>
 
@@ -88,10 +89,20 @@
 
             {% endfor %}
 
+            {% elif keyword %}
+
+            <div class="alert alert-warning mt-3">
+                找不到商品。
+            </div>
+
             {% endif %}
 
-            <a href="/" class="btn btn-secondary w-100">
+            <a
+                href="/"
+                class="btn btn-secondary w-100">
+
                 回首頁
+
             </a>
 
         </div>
