@@ -4,39 +4,121 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
 
     <title>巡冰箱</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
 </head>
 
 <body class="bg-light">
 
-<div class="container py-4" style="max-width:420px;">
+<div
+    class="container py-3"
+    style="max-width:500px;">
 
     <div class="card shadow">
 
         <div class="card-body">
 
-            <h3 class="text-center mb-4">
-                🧊 巡冰箱
-            </h3>
+            <!-- 標題 -->
 
-            <div class="text-center text-secondary mb-3">
+            <h2 class="text-center fw-bold mb-2">
+
+                🧊 巡冰箱
+
+            </h2>
+
+
+            <!-- 巡冰箱順序 -->
+
+            <div class="text-center text-secondary mb-4">
+
                 第 {{ order }} 項
+
             </div>
 
-            <h3 class="text-center mb-4">
-                {{ product[0] }}
-            </h3>
 
-            <p>🧊 冰箱容量：{{ product[1] }} 瓶</p>
+            <!-- 商品名稱 -->
 
-            <p>⚠️ 補貨門檻：{{ product[3] }} 瓶</p>
+            <div class="text-center mb-4">
 
-            <form method="post" action="/scan/{{ order }}">
+                <h2 class="fw-bold">
+
+                    {{ product[0] }}
+
+                </h2>
+
+            </div>
+
+
+            <!-- 商品資訊 -->
+
+            <div class="bg-light rounded p-3 mb-3">
+
+                <div class="row text-center">
+
+                    <div class="col-6">
+
+                        <div class="text-secondary">
+
+                            🧊 冰箱容量
+
+                        </div>
+
+                        <div class="fs-4 fw-bold">
+
+                            {{ product[1] }}
+
+                        </div>
+
+                        <div class="text-secondary">
+
+                            瓶
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6">
+
+                        <div class="text-secondary">
+
+                            ⚠️ 補貨門檻
+
+                        </div>
+
+                        <div class="fs-4 fw-bold">
+
+                            {{ product[3] }}
+
+                        </div>
+
+                        <div class="text-secondary">
+
+                            瓶
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 目前庫存 -->
+
+            <form
+                method="post"
+                action="/scan/{{ order }}">
 
                 <input
                     id="qty"
@@ -44,17 +126,18 @@
                     name="fridge_now"
                     value="{{ product[2] }}">
 
+
                 <div class="text-center my-4">
 
                     <div
                         id="value"
-                        class="display-3 fw-bold">
+                        class="display-1 fw-bold">
 
                         {{ product[2] }}
 
                     </div>
 
-                    <div class="text-muted">
+                    <div class="fs-5 text-secondary">
 
                         目前庫存
 
@@ -62,18 +145,30 @@
 
                 </div>
 
-                <div class="d-grid gap-2">
 
-                    <div class="row">
+                <!-- 庫存狀態 -->
+
+                <div
+                    id="status"
+                    class="alert text-center fw-bold fs-5">
+
+                </div>
+
+
+                <!-- 數量按鈕 -->
+
+                <div class="d-grid gap-3">
+
+                    <div class="row g-2">
 
                         <div class="col-6">
 
                             <button
                                 type="button"
-                                class="btn btn-danger btn-lg w-100"
+                                class="btn btn-danger btn-lg w-100 py-3 fs-4"
                                 onclick="change(-5)">
 
-                                -5
+                                −5
 
                             </button>
 
@@ -83,10 +178,10 @@
 
                             <button
                                 type="button"
-                                class="btn btn-danger btn-lg w-100"
+                                class="btn btn-danger btn-lg w-100 py-3 fs-4"
                                 onclick="change(-1)">
 
-                                -1
+                                −1
 
                             </button>
 
@@ -94,16 +189,17 @@
 
                     </div>
 
-                    <div class="row">
+
+                    <div class="row g-2">
 
                         <div class="col-6">
 
                             <button
                                 type="button"
-                                class="btn btn-success btn-lg w-100"
+                                class="btn btn-success btn-lg w-100 py-3 fs-4"
                                 onclick="change(1)">
 
-                                +1
+                                ＋1
 
                             </button>
 
@@ -113,10 +209,10 @@
 
                             <button
                                 type="button"
-                                class="btn btn-success btn-lg w-100"
+                                class="btn btn-success btn-lg w-100 py-3 fs-4"
                                 onclick="change(5)">
 
-                                +5
+                                ＋5
 
                             </button>
 
@@ -126,10 +222,15 @@
 
                 </div>
 
-                <hr>
+
+                <hr class="my-4">
+
+
+                <!-- 儲存 -->
 
                 <button
-                    class="btn btn-primary btn-lg w-100">
+                    type="submit"
+                    class="btn btn-primary btn-lg w-100 py-3 fs-5">
 
                     💾 儲存並下一項
 
@@ -137,13 +238,17 @@
 
             </form>
 
+
             <br>
+
+
+            <!-- 回首頁 -->
 
             <a
                 href="/"
-                class="btn btn-secondary w-100">
+                class="btn btn-secondary btn-lg w-100">
 
-                返回首頁
+                🏠 返回首頁
 
             </a>
 
@@ -153,12 +258,47 @@
 
 </div>
 
+
 <script>
 
 const input = document.getElementById("qty");
+
 const value = document.getElementById("value");
 
+const status = document.getElementById("status");
+
 const MAX = {{ product[1] }};
+
+const THRESHOLD = {{ product[3] }};
+
+
+function updateStatus(){
+
+    const n = Number(input.value);
+
+    value.innerText = n;
+
+
+    if(n <= THRESHOLD){
+
+        status.className =
+            "alert alert-danger text-center fw-bold fs-5";
+
+        status.innerText =
+            "⚠️ 需要補貨";
+
+    }else{
+
+        status.className =
+            "alert alert-success text-center fw-bold fs-5";
+
+        status.innerText =
+            "✅ 庫存正常";
+
+    }
+
+}
+
 
 function change(step){
 
@@ -166,20 +306,32 @@ function change(step){
 
     n += step;
 
+
     if(n < 0){
+
         n = 0;
+
     }
+
 
     if(n > MAX){
+
         n = MAX;
+
     }
 
+
     input.value = n;
-    value.innerText = n;
+
+    updateStatus();
 
 }
 
+
+updateStatus();
+
 </script>
+
 
 </body>
 
