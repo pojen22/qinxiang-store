@@ -1,10 +1,60 @@
 from routes.home import register as home_register
 from db import get_connection
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 
 app = Flask(__name__)
 home_register(app)
 
+@app.route("/api/search")
+def api_search():
+
+    keyword = request.args.get("keyword", "").strip()
+
+    if not keyword:
+        return jsonify({
+            "success": False,
+            "message": "請提供商品名稱或條碼"
+        })
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT
+        name,
+        price,
+        fridge_max,
+        fridge_now,
+        restock_threshold
+    FROM products
+    WHERE name LIKE ?
+       OR barcode = ?
+    ORDER BY
+        CASE WHEN display_order = 0 THEN 1 ELSE 0 END,
+        display_order
+    """, ("%" + keyword + "%", keyword))
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    products = []
+
+    for row in rows:
+
+        products.append({
+            "name": row[0],
+            "price": row[1],
+            "fridge_max": row[2],
+            "fridge_now": row[3],
+            "restock_threshold": row[4]
+        })
+
+    return jsonify({
+        "success": True,
+        "count": len(products),
+        "products": products
+    })
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
